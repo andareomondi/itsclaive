@@ -7,4 +7,10 @@ class Home(View):
 
 class About(View):
     def get(self, request):
-        return render(request, template_name='base/about.html')
+        return render(request, template_name='base/story.html')
+class Gallery(View):
+    def get(self, request):
+        return render(request, template_name='base/gallery.html')
+class Services(View):
+    def get(self, request):
+        return render(request, template_name='base/services.html')
