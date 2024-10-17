@@ -498,24 +498,26 @@
                                     required name="bookingname">
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="bookingEmail" placeholder="Your Email"
-                                    required>
+                                <input type="text" class="form-control" id="bookingEmail"
+                                    placeholder="Location of Meetup" required name="location">
                             </div>
                             <div class="mb-3">
                                 <input type="tel" class="form-control" id="bookingPhone" placeholder="Your Phone"
-                                    required>
+                                    required name="number">
+
                             </div>
                             <div class="mb-3">
-                                <select class="form-select" id="bookingService" required>
+                                <select class="form-select" id="bookingService" required name="service">
+
                                     <option value="">Select a Service</option>
-                                    <option value="wedding">Wedding Session</option>
-                                    <option value="studio">Studio Shooting</option>
-                                    <option value="product">Product Shoot</option>
-                                    <option value="video">Video Shooting</option>
+                                    <option value="Wedding Session">Wedding Session</option>
+                                    <option value="Studio Shooting">Studio Shooting</option>
+                                    <option value="Product Shoot">Product Shoot</option>
+                                    <option value="Video Shooting">Video Shooting</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <input type="date" class="form-control" id="bookingDate" required>
+                                <input type="date" class="form-control" id="bookingDate" required name="date">
                             </div>
                             <button type="submit" class="btn btn-light w-100">Book Now</button>
                         </form>
@@ -527,6 +529,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for booking a session. We will confirm your appointment soon!');
+            e.target.reset();
+            $('#bookingModal').modal('hide');
+        });
+    </script>
 </body>
 
 </html>

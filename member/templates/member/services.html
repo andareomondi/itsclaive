@@ -26,7 +26,16 @@
         </div>
     </div>
 </nav>
-
+<div class="row justify-content-center">
+    <div class="col text-center">
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 <section id="services" class="py-5">
     <div class="container">
