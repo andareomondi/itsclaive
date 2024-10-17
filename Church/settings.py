@@ -137,9 +137,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# added staff
-AUTH_USER_MODEL = 'member.Member'
-AUTHENTICATION_BACKENDS = [
-    'member.auth_backends.AuthBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
+

@@ -1,578 +1,229 @@
-<!DOCTYPE html>
+{% extends 'member/base.html' %}
 {% load static %}
-<html lang="en" data-bs-theme="dark">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAIVE - Professional Photography</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
-    <style>
-        :root {
-            --primary-color: #1a1a1a;
-            --secondary-color: #39FF14;
-            --gold-color: #FFD700;
-            --text-color: #ffffff;
-            --hover-text-color: #f1faee;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        .navbar {
-            background-color: rgba(26, 26, 26, 0.9);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .navbar.scrolled {
-            background-color: rgba(26, 26, 26, 0.95);
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: var(--gold-color) !important;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .nav-link {
-            color: var(--text-color) !important;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--secondary-color);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            transform: translateX(0);
-        }
-
-        .btn-outline-light {
-            border-color: var(--gold-color);
-            color: var(--gold-color);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-outline-light::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background-color: var(--secondary-color);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn-outline-light:hover {
-            color: var(--primary-color);
-            border-color: var(--secondary-color);
-        }
-
-        .btn-outline-light:hover::before {
-            left: 0;
-        }
-
-        .hero {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://source.unsplash.com/random/1920x1080/?photographer');
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.3);
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero h1,
-        .hero h2 {
-            color: var(--gold-color);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
-        }
-
-        .hero p {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, rgba(42, 42, 42, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(57, 255, 20, 0.2);
-            border-color: var(--secondary-color);
-        }
-
-        .portfolio-img {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-img img {
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-img:hover img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-img::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(57, 255, 20, 0.2) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .portfolio-img:hover::after {
-            opacity: 1;
-        }
-
-        #testimonials {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(42, 42, 42, 0.8) 100%);
-        }
-
-        .testimonial-card {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.6) 0%, rgba(42, 42, 42, 0.6) 100%);
-            border: 1px solid var(--gold-color);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
-        }
-
-        #contact {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
-        }
-
-        .social-icons a {
-            color: var(--gold-color);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--secondary-color);
-            transform: scale(1.2);
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-            z-index: 99;
-            background-color: var(--secondary-color);
-            border: none;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        #back-to-top:hover {
-            background-color: var(--gold-color);
-            transform: translateY(-5px);
-        }
-
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: var(--gold-color);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: var(--secondary-color);
-            color: var(--text-color);
-            box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
-        }
-
-        .btn-light {
-            background-color: var(--gold-color);
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-light::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background-color: var(--secondary-color);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn-light:hover {
-            color: var(--primary-color);
-        }
-
-        .btn-light:hover::before {
-            left: 0;
-        }
-
-        .section-title {
-            color: var(--gold-color);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.5);
-        }
-
-        .card-title {
-            color: var(--gold-color);
-        }
-
-        .card-text {
-            color: var(--text-color);
-        }
-
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="animated-bg"></div>
-
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top p-4">
+{% block content %}
+<section id="home" class="hero">
+    <div class="hero-content d-flex align-items-center">
         <div class="container">
-            <a class="navbar-brand" href="#">CLAIVE</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">HOME</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">PORTFOLIO</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">SERVICES</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testimonials">TESTIMONIALS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">CONTACT</a>
-                    </li>
-                </ul>
-                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bookingModal">BOOK
-                    NOW</button>
-            </div>
-        </div>
-    </nav>
-
-    <section id="home" class="hero">
-        <div class="hero-content d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 text-center" data-aos="fade-right">
-                        <img class="img-fluid " src="{% static 'assets/img/claive-min.jpg' %}" alt="Card image cap"
-                            style="max-height: 600px;">
-                    </div>
-                    <div class="col-md-6 text-center" data-aos="fade-left">
-                        <h1 class="display-4 fw-bold mt-2">HELLO!</h1>
-                        <h2 class="display-4 fw-bold mb-4">I'M CLIAVE MWITTI</h2>
-                        <p class="lead mb-4">A professional landscape, still-life, and architectural photographer. I
-                            would love to share my experience with you.</p>
-                        <button class="btn btn-light">CONTACT ME</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-6">
-                    <h2 class="display-4 fw-bold mb-4">I TELL THE STORY OF THE TIME.</h2>
-                    <p class="lead">A professional landscape, still-life, and architectural photographer. I would love
-                        to share my experience with you.</p>
-                </div>
-                <div class="col-md-6">
-                    <img src="https://www.city-academy.com/staticresources/uploads/1653575377.jpg" alt="Dancing couple"
-                        class="img-fluid">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card service-card text-white h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-camera-retro me-2"></i>WEDDING SESSION</h5>
-                            <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-                                Donec ullamcorper nulla non metus auctor fringilla.</p>
-                            <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card service-card text-white h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-studio-vinari me-2"></i>STUDIO SHOOTING</h5>
-                            <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-                                Donec ullamcorper nulla non metus auctor fringilla.</p>
-                            <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card service-card text-white h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-box me-2"></i>PRODUCT SHOOT</h5>
-                            <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-                                Donec ullamcorper nulla non metus auctor fringilla.</p>
-                            <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card service-card text-white h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-video me-2"></i>VIDEO SHOOTING</h5>
-                            <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-                                Donec ullamcorper nulla non metus auctor fringilla.</p>
-                            <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <button class="btn btn-outline-light">VIEW ALL SERVICES</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 section-title" data-aos="fade-up">PORTFOLIO</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4" data-aos="zoom-in">
-                    <a href="#" data-fancybox="gallery" data-caption="Wedding Photography">
-                        <div class="portfolio-img">
-                            <img src="https://classicphotographers.com/wp-2016/wp-content/uploads/2023/09/10151390-1814-750x500.jpg"
-                                alt="Wedding photo" class="img-fluid rounded">
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
-                    <a href="#" data-fancybox="gallery" data-caption="Portrait Photography">
-                        <div class="portfolio-img">
-                            <img src="https://www.anthropics.com/portraitpro/img/page-images/homepage/v24/out-now.jpg"
-                                alt="Portrait photo" class="img-fluid rounded">
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
-                    <a href="#" data-fancybox="gallery" data-caption="Landscape Photography">
-                        <div class="portfolio-img">
-                            <img src="https://realestateblogpost.com/uploads/images/2023/05/image_750x_645392c81ceb5.jpg"
-                                alt="Landscape photo" class="img-fluid rounded">
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 section-title" data-aos="fade-up">TESTIMONIALS</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4" data-aos="fade-up">
-                    <div class="card testimonial-card text-white">
-                        <div class="card-body">
-                            <p class="card-text">"Joshua's photography skills are exceptional. He captured our wedding
-                                beautifully, creating memories we'll cherish forever!"</p>
-                            <footer class="blockquote-footer text-white">John & Sarah</footer>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card testimonial-card text-white">
-                        <div class="card-body">
-                            <p class="card-text">"The product shoot exceeded our expectations. Joshua's attention to
-                                detail and creativity brought our products to life!"</p>
-                            <footer class="blockquote-footer text-white">Tech Innovations Inc.</footer>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card testimonial-card text-white">
-                        <div class="card-body">
-                            <p class="card-text">"Joshua's landscape photos are breathtaking. He truly captures the
-                                essence of nature in ways we've never seen before."</p>
-                            <footer class="blockquote-footer text-white">Nature Magazine</footer>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="contact" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 section-title" data-aos="fade-up">GET IN TOUCH</h2>
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <form id="contactForm" data-aos="fade-up">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" id="message" rows="5" placeholder="Your Message"
-                                required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-light w-100">SEND MESSAGE</button>
-                    </form>
+                <div class="col-md-6 text-center" data-aos="fade-right">
+                    <img class="img-fluid " src="{% static 'assets/img/claive-min.jpg' %}" alt="Card image cap"
+                        style="max-height: 680px;">
                 </div>
-            </div>
-            <div class="text-center mt-5">
-                <div class="social-icons" data-aos="fade-up">
-                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2024 ICONI Photography. All rights reserved.</p>
-    </footer>
-
-    <button id="back-to-top" class="btn btn-lg" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
-
-    <!-- Booking Modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Book a Session</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="bookingForm">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="bookingName" placeholder="Your Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" id="bookingEmail" placeholder="Your Email"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="tel" class="form-control" id="bookingPhone" placeholder="Your Phone" required>
-                        </div>
-                        <div class="mb-3">
-                            <select class="form-select" id="bookingService" required>
-                                <option value="">Select a Service (Please make sure you checked the price)</option>
-                                <option value="wedding">Wedding Session</option>
-                                <option value="studio">Studio Shooting</option>
-                                <option value="product">Product Shoot</option>
-                                <option value="video">Video Shooting</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <input type="date" class="form-control" id="bookingDate" required>
-                        </div>
-                        <button type="submit" class="btn btn-light w-100">Book Now</button>
-                    </form>
+                <div class="col-md-6 text-center" data-aos="fade-left">
+                    <h1 class="display-4 fw-bold mt-2">HELLO!</h1>
+                    <h2 class="display-4 fw-bold mb-4">I'M CLIAVE MWITTI</h2>
+                    <p class="lead mb-4">A professional landscape, still-life, and architectural photographer. I
+                        would love to share my experience with you.</p>
+                    <a href="#contact" class="btn btn-light">CONTACT ME</a>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Contact Modal
+<section id="services">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="display-4 fw-bold mb-4">I TELL THE STORY OF TIME.</h2>
+                <p class="lead">A professional landscape, still-life, and architectural photographer. I would love
+                    to share my experience with you.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://www.city-academy.com/staticresources/uploads/1653575377.jpg" class="img-fluid">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card service-card text-white h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-camera-retro me-2"></i>WEDDING SESSION</h5>
+                        <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+                            Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card text-white h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-studio-vinari me-2"></i>STUDIO SHOOTING</h5>
+                        <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+                            Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card text-white h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-box me-2"></i>PRODUCT SHOOT</h5>
+                        <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+                            Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card text-white h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-video me-2"></i>VIDEO SHOOTING</h5>
+                        <p class="card-text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+                            Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <a href="#" class="text-white">VIEW SERVICE <i class="fas fa-chevron-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-light">VIEW ALL SERVICES</button>
+        </div>
+    </div>
+</section>
+
+<section id="portfolio" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title" data-aos="fade-up">PORTFOLIO</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="zoom-in">
+                <a href="#" data-fancybox="gallery" data-caption="Wedding Photography">
+                    <div class="portfolio-img">
+                        <img src="{% static 'assets/img/PSX_20241012_230504 (1)-min.jpg' %}" alt="Wedding photo"
+                            class="img-fluid rounded">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+                <a href="#" data-fancybox="gallery" data-caption="Portrait Photography">
+                    <div class="portfolio-img">
+                        <img src="{% static 'assets/img/PSX_20241013_230047 (1)-min (1).jpg' %}" alt="Portrait photo"
+                            class="img-fluid rounded">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                <a href="#" data-fancybox="gallery" data-caption="Landscape Photography">
+                    <div class="portfolio-img">
+                        <img src="{% static 'assets/img/image.jpg' %}" alt="Landscape photo" class="img-fluid rounded">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimonials" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title" data-aos="fade-up">TESTIMONIALS</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card testimonial-card text-white">
+                    <div class="card-body">
+                        <p class="card-text">"Joshua's photography skills are exceptional. He captured our wedding
+                            beautifully, creating memories we'll cherish forever!"</p>
+                        <footer class="blockquote-footer text-white">John & Sarah</footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card testimonial-card text-white">
+                    <div class="card-body">
+                        <p class="card-text">"The product shoot exceeded our expectations. Joshua's attention to
+                            detail and creativity brought our products to life!"</p>
+                        <footer class="blockquote-footer text-white">Tech Innovations Inc.</footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card testimonial-card text-white">
+                    <div class="card-body">
+                        <p class="card-text">"Joshua's landscape photos are breathtaking. He truly captures the
+                            essence of nature in ways we've never seen before."</p>
+                        <footer class="blockquote-footer text-white">Nature Magazine</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="contact" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title" data-aos="fade-up">GET IN TOUCH</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form id="contactForm" data-aos="fade-up">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="message" rows="5" placeholder="Your Message"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-light w-100">SEND MESSAGE</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <div class="social-icons" data-aos="fade-up">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 ICONI Photography. All rights reserved.</p>
+</footer>
+
+<button id="back-to-top" class="btn btn-lg" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Book a Session</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="bookingName" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="bookingEmail" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" class="form-control" id="bookingPhone" placeholder="Your Phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" id="bookingService" required>
+                            <option value="">Select a Service (Please make sure you checked the price)</option>
+                            <option value="wedding">Wedding Session</option>
+                            <option value="studio">Studio Shooting</option>
+                            <option value="product">Product Shoot</option>
+                            <option value="video">Video Shooting</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="date" class="form-control" id="bookingDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-light w-100">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Modal
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
@@ -601,107 +252,78 @@
         </div>
     </div> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
 
-        // Initialize Fancybox
-        Fancybox.bind("[data-fancybox]", {
-            // Your custom options
-        });
+    // Initialize Fancybox
+    Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+    });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Navbar background change on scroll
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Back to top button
-        const backToTopButton = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
         });
+    });
 
-        // Form submission (you would typically send this data to a server)
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for your message. We will get back to you soon!');
-            e.target.reset();
-        });
-
-        document.getElementById('bookingForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for booking a session. We will confirm your appointment soon!');
-            e.target.reset();
-            $('#bookingModal').modal('hide');
-        });
-
-
-        // Animated background
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.style.position = 'absolute';
-            particle.style.width = '2px';
-            particle.style.height = '2px';
-            particle.style.background = 'rgba(255, 215, 0, 0.5)';
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-
-            const size = Math.random() * 5 + 1;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-
-            const startX = Math.random() * window.innerWidth;
-            const startY = Math.random() * window.innerHeight;
-            particle.style.left = `${startX}px`;
-            particle.style.top = `${startY}px`;
-
-            const duration = Math.random() * 3 + 2;
-            particle.style.animation = `float ${duration}s linear infinite`;
-
-            document.querySelector('.animated-bg').appendChild(particle);
-
-            setTimeout(() => {
-                particle.remove();
-            }, duration * 1000);
+    // Navbar background change on scroll
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
+    });
 
-        setInterval(createParticle, 100);
+    // Back to top button
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
 
-        // Add this to your existing styles
-        const style = document.createElement('style');
-        style.textContent = `
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Form submission (you would typically send this data to a server)
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message. We will get back to you soon!');
+        e.target.reset();
+    });
+
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for booking a session. We will confirm your appointment soon!');
+        e.target.reset();
+        $('#bookingModal').modal('hide');
+    });
+
+
+
+
+    // Add this to your existing styles
+    const style = document.createElement('style');
+    style.textContent = `
             @keyframes float {
                 0% {
                     transform: translateY(0) rotate(0deg);
@@ -711,14 +333,12 @@
                 }
             }
         `;
-        document.head.appendChild(style);
+    document.head.appendChild(style);
 
-        // Parallax effect for hero background
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.pageYOffset;
-            document.querySelector('.hero-background').style.transform = `scale(1.1) translateY(${scrollPosition * 0.5}px)`;
-        });
-    </script>
-</body>
-
-</html>
+    // Parallax effect for hero background
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.pageYOffset;
+        document.querySelector('.hero-background').style.transform = `scale(1.1) translateY(${scrollPosition * 0.5}px)`;
+    });
+</script>
+{% endblock content %}
