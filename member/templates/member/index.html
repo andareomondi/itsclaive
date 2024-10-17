@@ -2,13 +2,40 @@
 {% load static %}
 
 {% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark p-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">CLAIVE</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'portfolio' %}">PORTFOLIO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services' %}">SERVICES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#testimonials">TESTIMONIALS</a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bookingModal">BOOK
+                NOW</button>
+        </div>
+    </div>
+</nav>
 <section id="home" class="hero">
     <div class="hero-content d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 text-center" data-aos="fade-right">
+                <div class="col-md-6 text-center">
                     <img class="img-fluid " src="{% static 'assets/img/claive-min.jpg' %}" alt="Card image cap"
-                        style="max-height: 680px;">
+                        style="max-height: 680px;" data-aos="zoom-in">
                 </div>
                 <div class="col-md-6 text-center" data-aos="fade-left">
                     <h1 class="display-4 fw-bold mt-2">HELLO!</h1>
@@ -31,7 +58,7 @@
                     to share my experience with you.</p>
             </div>
             <div class="col-md-6">
-                <img src="https://www.city-academy.com/staticresources/uploads/1653575377.jpg" class="img-fluid">
+                <img src="{% static 'assets/img/pic6.jpg' %}" class="img-fluid">
             </div>
         </div>
         <div class="row">
