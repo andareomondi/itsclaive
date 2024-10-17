@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,19 +158,22 @@
             0% {
                 transform: translateY(0) rotate(0deg);
             }
+
             100% {
                 transform: translateY(-100vh) rotate(360deg);
             }
         }
     </style>
 </head>
+
 <body>
     <div class="animated-bg"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">ICONI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -190,7 +194,8 @@
                         <a class="nav-link" href="#contact">CONTACT</a>
                     </li>
                 </ul>
-                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bookingModal">BOOK NOW</button>
+                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bookingModal">BOOK
+                    NOW</button>
             </div>
         </div>
     </nav>
@@ -311,21 +316,21 @@
             particle.style.background = 'rgba(255, 215, 0, 0.5)';
             particle.style.borderRadius = '50%';
             particle.style.pointerEvents = 'none';
-            
+
             const size = Math.random() * 5 + 1;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
-            
+
             const startX = Math.random() * window.innerWidth;
             const startY = Math.random() * window.innerHeight;
             particle.style.left = `${startX}px`;
             particle.style.top = `${startY}px`;
-            
+
             const duration = Math.random() * 3 + 2;
             particle.style.animation = `float ${duration}s linear infinite`;
-            
+
             document.querySelector('.animated-bg').appendChild(particle);
-            
+
             setTimeout(() => {
                 particle.remove();
             }, duration * 1000);
@@ -334,4 +339,5 @@
         setInterval(createParticle, 100);
     </script>
 </body>
+
 </html>
