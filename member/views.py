@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from .models import Session
+from .models import Session, Message
 # Create your views here.
 class Home(View):
     def get(self, request):
@@ -62,3 +62,20 @@ class Portfolio(View):
         messages.success(request, 'Your request  has been sent successfully')
 
         return render(request, 'member/portfolio.html')
+
+def send_messages(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        new_message = Message()
+        new_message.name = name
+        new_message.email = email
+        new_message.message = message
+        new_message.save()
+        messages.success(request,  f'Thank you {name}, Your message has been sent successfully')
+
+        return redirect('home')
+    else:
+        return render(request, 'member/index.html')
+    
