@@ -7,6 +7,7 @@ class Session(models.Model):
     date = models.DateField()
     phone_number = models.IntegerField()
     service_type = models.CharField(max_length=255)
+    status = models.CharField(max_length=255, default='pending')
     def  __str__(self):
         return f'session {self.id} by {self.name} at {self.venue} on {self.date}'
     

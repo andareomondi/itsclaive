@@ -79,3 +79,31 @@ def send_messages(request):
     else:
         return render(request, 'member/index.html')
     
+class Dashboard(View):
+    def get(self, request):
+        sessions = Session.objects.all()
+        number_of_sessions = len(sessions)
+        confirmed_sessions = len(Session.objects.filter(status='Confirmed'))
+        remaining = number_of_sessions - confirmed_sessions
+        context = {
+            'number': number_of_sessions,
+            'sessions': sessions,
+            'confirmed': confirmed_sessions,
+            'remaining':  remaining
+
+        }
+        return render(request,  'member/dashboard.html', context=context)
+    def post(self, request):
+        sessions = Session.objects.all()
+        number_of_sessions = len(sessions)
+        context = {
+            'number': number_of_sessions,
+            'sessions': sessions,
+        }
+        id = request.POST.get('id')
+        session = Session.objects.get(id=id)
+        session.status = 'Confirmed'
+        session.save()
+        return redirect('dashboard')
+
+    

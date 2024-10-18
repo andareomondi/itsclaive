@@ -26,4 +26,5 @@ urlpatterns = [
     path('services/', Services.as_view(), name='services'),
     path('portfolio/', Portfolio.as_view(), name='portfolio'),
     path('users/', include('member.urls')),
+    path('dashboard/', Dashboard.as_view(), name='dashboard'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
