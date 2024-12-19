@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'Church.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'defaultdb',
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_NEtWkT14wQxCVrHa50s',
-        'HOST': 'pg-3508584-shadrackandare-6c25.k.aivencloud.com',
-        'PORT': '20469',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'defaultdb',
+        # 'USER': 'avnadmin',
+        # 'PASSWORD': 'AVNS_NEtWkT14wQxCVrHa50s',
+        # 'HOST': 'pg-3508584-shadrackandare-6c25.k.aivencloud.com',
+        # 'PORT': '20469',
 
     }
 }
