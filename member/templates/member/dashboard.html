@@ -99,7 +99,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">cliave Dashboard</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Claive Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -108,9 +108,6 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -162,36 +159,44 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <form method="post">
-                                {% csrf_token %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <tbody>
                                 {% for session in sessions %}
+                                {% if session.status != 'Confirmed' %}
                                 <tr>
                                     <td>{{session.date}}</td>
                                     <td>{{session.name}}</td>
                                     <td>{{session.service_type}}</td>
                                     <td>0{{session.phone_number}}</td>
-                                    <td>0{{session.venue}}</td>
+                                    <td>{{session.venue}}</td>
                                     <td>{{session.status}}</td>
-
-                                    {% if session.status == 'Confirmed' %}
-                                    <td>
-                                        <button class="btn btn-success btn-sm" value="{{session.id}}"
-                                            disabled>Checked</button>
-                                    </td>
-                                    {% else %}
-
                                     <td>
                                         <button class="btn btn-action btn-sm" value="{{session.id}}" name="id" id="id"
                                             type="submit">Check</button>
                                     </td>
-
-                                    {% endif %}
                                 </tr>
-
+                                {% endif %}
                                 {% endfor %}
-                            </form>
-                        </tbody>
+
+                                {% for session in sessions %}
+                                {% if session.status == 'Confirmed' %}
+                                <tr>
+                                    <td>{{session.date}}</td>
+                                    <td>{{session.name}}</td>
+                                    <td>{{session.service_type}}</td>
+                                    <td>0{{session.phone_number}}</td>
+                                    <td>{{session.venue}}</td>
+                                    <td>{{session.status}}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm" value="{{session.id}}"
+                                            disabled>Checked</button>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </form>
                     </table>
                 </div>
             </div>

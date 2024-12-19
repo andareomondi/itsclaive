@@ -40,7 +40,7 @@
             {% endfor %}
         </div>
     </div>
-    <div class="hero-content d-flex align-items-center">
+    <div class="hero-content d-flex align-items-center" id="hero">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
@@ -226,7 +226,10 @@
 </section>
 
 <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2024 cliave Photography. All rights reserved.</p>
+    <p>&copy; 2024 <a href="{% url 'dashboard' %}" style="color: inherit; text-decoration: none;">Claive
+            Photography</a>. All
+        rights
+        preserved</p>
 </footer>
 
 <button id="back-to-top" class="btn btn-lg" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>

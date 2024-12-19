@@ -22,7 +22,7 @@ class Home(View):
         messages.success(request, 'Your request  has been sent successfully')
 
         return render(request, 'member/index.html')
-    
+
 class Services(View):
     def get(self, request):
         return render(request, 'member/services.html')
@@ -42,7 +42,7 @@ class Services(View):
         messages.success(request, 'Your request  has been sent successfully')
 
         return render(request, 'member/services.html')
-    
+
 class Portfolio(View):
     def get(self, request):
         return render(request, 'member/portfolio.html')
@@ -78,7 +78,7 @@ def send_messages(request):
         return redirect('home')
     else:
         return render(request, 'member/index.html')
-    
+
 class Dashboard(View):
     def get(self, request):
         sessions = Session.objects.all()
@@ -105,5 +105,3 @@ class Dashboard(View):
         session.status = 'Confirmed'
         session.save()
         return redirect('dashboard')
-
-    

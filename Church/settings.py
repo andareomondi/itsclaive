@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z+y35_&od9=)j1hwu*q-7$&hv$9&sa4ut5x=px#gl^c6ps5ult'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,7 +88,7 @@ DATABASES = {
         'PASSWORD': 'AVNS_NEtWkT14wQxCVrHa50s',
         'HOST': 'pg-3508584-shadrackandare-6c25.k.aivencloud.com',
         'PORT': '20469',
-        
+
     }
 }
 
@@ -143,4 +143,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
